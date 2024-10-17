@@ -32,6 +32,13 @@ cloudinary.config({
 
 connectiondb();
 
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
+
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/admin", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
+
+export default app;
