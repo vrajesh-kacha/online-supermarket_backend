@@ -42,7 +42,7 @@ export const login = async (req, res) => {
       { _id, username, phone, role },
       process.env.JWT_SECRET,
       {
-        expiresIn: 30,
+        expiresIn: 30000,
       }
     );
     return res.status(200).send({
@@ -109,13 +109,13 @@ export const addtoCart = async (req, res) => {
 
 export const updateProfile=async (req,res)=>{
   try {
-  const {name,password,phone}= req.body
+  const {name,password,phone,cart}= req.body
   const user= await userModel.find({email:req.body.user.email})
   const updatedUser= await userModel.findOneAndUpdate({email:req.body.user.email},{
       $set:{
         username:name || user.name,
         password:password ?  await hashPassword(password) : user.password,
-        phone:phone || user.phone
+        phone:phone || user.phone,
       }
   },{new:true})
 return res.status(200).send({
@@ -184,3 +184,23 @@ export const getCart = async (req, res) => {
     });
   }
 };
+
+export const deleteAllCart=async(req,res)=>{
+  try{
+    await userModel.findOneAndUpdate({email:req.body.email},{
+      $set:{
+      cart:[]
+      }
+  })
+return res.status(200).send({
+  success:true,
+  message:"All cart deleted succesfully",
+})
+  } catch (error) {
+    return res.status(400).send({
+      success: false, 
+      message: error.message,
+    })
+  }
+
+}

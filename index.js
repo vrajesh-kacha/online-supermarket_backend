@@ -14,7 +14,7 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://online-supermarket-frontend-k6jo.vercel.app",
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -36,9 +36,13 @@ app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
+app.listen(3000,()=>{
+  console.log("api running")
+})
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/admin", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
+
 
 export default app;

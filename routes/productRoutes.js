@@ -12,7 +12,7 @@ router.post("/create-product",verifyToken,isAdmin,upload.fields([
     },
 ]),createProductController);
 router.get("/get-products",getAllProductController);
-router.patch("/update-product/:pid",verifyToken,isAdmin, 
+router.put("/update-product/:pid",verifyToken,isAdmin, 
     upload.fields([
         {
             name:"image",

@@ -23,7 +23,7 @@ export const createCategoryController=async(req,res)=>{
         
     } 
     catch (error) {
-    return res.staus(500).json({
+    return res.status(500).json({
         success:false, 
         message:"Error in created category",
         error
