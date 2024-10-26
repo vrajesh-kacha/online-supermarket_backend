@@ -14,7 +14,7 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: "https://online-supermarket-frontend-k6jo.vercel.app",
+    origin: process.env.DOMAIN,
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
   })
