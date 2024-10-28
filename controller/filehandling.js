@@ -1,21 +1,19 @@
 import {v2 as cloudinary} from 'cloudinary';
-const uploadOnCloudinary=async(localFilePath)=>{
-
-try {
-    if(!localFilePath){
-        throw new Error('Local file path is required.');
-    }
-    const response=await cloudinary.uploader.upload(localFilePath,{
-        resource_type:'image',
-        transformation:[
-            {width:300, height:300, crop:'fit'}
-        ]
-    })
-     return response
-}
- catch (error) {
-  return null;
-}
+const uploadOnCloudinary=async(fileBuffer)=>{
+    try {
+        const result = await cloudinary.uploader.upload_stream(
+          { resource_type: "image" },
+          (error, result) => {
+            if (error) throw new Error("Cloudinary upload failed");
+            return result;
+          }
+        );
+        result.end(fileBuffer);
+    
+        return result;
+      } catch (error) {
+        throw new Error(error.message);
+      }
 
 }
 

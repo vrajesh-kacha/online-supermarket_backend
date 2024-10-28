@@ -34,6 +34,7 @@ export const createProductController = async (req, res) => {
       quantity,
       photo: productImage.url,
     });
+    console.log(productImage)
     return res.status(201).send({
       success: true,
       message: "Product Created Successfully",
