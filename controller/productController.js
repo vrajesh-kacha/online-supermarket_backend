@@ -34,7 +34,7 @@ export const createProductController = async (req, res) => {
       quantity,
       photo: productImage.url,
     });
-    console.log(productImage)
+  
     return res.status(201).send({
       success: true,
       message: "Product Created Successfully",
@@ -88,19 +88,17 @@ export const updateProductController = async (req, res) => {
     const { name, description, price, category, quantity } = req.body;
     const updateData = {};
 
-    if (name !== undefined) updateData.name = name;
-    if (description !== undefined) updateData.description = description;
-    if (price !== undefined) updateData.price = price;
-    if (category !== undefined) updateData.category = category;
-    if (quantity !== undefined) updateData.quantity = quantity;
+    if (name) updateData.name = name;
+    if (description) updateData.description = description;
+    if (price) updateData.price = price;
+    if (category) updateData.category = category;
+    if (quantity) updateData.quantity = quantity;
 
     if (req.files && req.files.image && req.files.image.length > 0) {
       const imageBuffer = req.files.image[0].buffer;
       const productImage = await uploadOnCloudinary(imageBuffer);
       updateData.photo = productImage.url;
-      fs.unlinkSync(productLocalPath);
     }
-
     const products = await productModel.findByIdAndUpdate(
       req.params.pid,
       updateData,
