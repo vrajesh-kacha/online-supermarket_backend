@@ -190,7 +190,7 @@ export const paymentVerification = async (req, res) => {
     if (expectedSignature === razorpay_signature) {
 
    return res.redirect(
-        `http://localhost:5173/dashboard/paymentsuccess`
+        `${process.env.DOMAIN}/dashboard/paymentsuccess`
       );
     } 
     else {
