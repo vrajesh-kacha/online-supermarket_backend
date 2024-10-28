@@ -23,9 +23,9 @@ export const createProductController = async (req, res) => {
       return res.status(400).json({
         message: "product image is required",
       });
-    }
-    const productLocalPath = req.files.image[0].path;
-    const productImage = await uploadOnCloudinary(productLocalPath);
+    } 
+    const imageBuffer = req.files.image[0].buffer
+    const productImage = await uploadOnCloudinary(imageBuffer);
     const product = await productModel.create({
       name,
       description,
@@ -34,7 +34,6 @@ export const createProductController = async (req, res) => {
       quantity,
       photo: productImage.url,
     });
-    fs.unlinkSync(productLocalPath);
     return res.status(201).send({
       success: true,
       message: "Product Created Successfully",
@@ -95,8 +94,8 @@ export const updateProductController = async (req, res) => {
     if (quantity !== undefined) updateData.quantity = quantity;
 
     if (req.files && req.files.image && req.files.image.length > 0) {
-      const productLocalPath = req.files.image[0].path;
-      const productImage = await uploadOnCloudinary(productLocalPath);
+      const imageBuffer = req.files.image[0].buffer;
+      const productImage = await uploadOnCloudinary(imageBuffer);
       updateData.photo = productImage.url;
       fs.unlinkSync(productLocalPath);
     }
