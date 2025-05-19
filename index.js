@@ -36,7 +36,9 @@ app.get("/", (req, res) => {
 });
 
 
-
+app.listen(3000,()=>{
+  console.log("api is runnign") 
+})
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/admin", categoryRoutes);
 app.use("/api/v1/products", productRoutes);
